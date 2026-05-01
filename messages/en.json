@@ -1,0 +1,163 @@
+{
+  "nav": {
+    "services": "Services",
+    "process": "Process",
+    "team": "Team",
+    "pricing": "Pricing",
+    "reviews": "Reviews",
+    "faq": "FAQ",
+    "contact": "Contact",
+    "getStarted": "Get in touch"
+  },
+  "hero": {
+    "headline": "Progmetia AI studio.",
+    "subtitle": "We develop custom AI solutions for innovative companies.",
+    "cta": "Contact us",
+    "services": "Our services"
+  },
+  "services": {
+    "title": "What We Do",
+    "items": [
+      {
+        "title": "Chatbot Development",
+        "description": "We develop intelligent chatbots that leverage advanced NLP to elevate customer interactions and streamline your business processes."
+      },
+      {
+        "title": "Content Generation & Automation",
+        "description": "Our content solutions effortlessly generate high-quality, engaging content at scale according to your brand's guidelines."
+      },
+      {
+        "title": "Workflow Automation",
+        "description": "We automate your workflows to streamline repetitive tasks, enhance efficiency, save time, and eliminate errors."
+      },
+      {
+        "title": "LLM & Model Development",
+        "description": "We develop Large Language Models that transform how your company interacts with data and customers."
+      },
+      {
+        "title": "Strategic AI Consulting",
+        "description": "Our experts provide strategic guidance, enabling your business to implement AI solutions that drive transformative growth."
+      },
+      {
+        "title": "Custom AI Solutions",
+        "description": "We design and build bespoke AI systems tailored to your unique business challenges, from concept to production deployment."
+      }
+    ]
+  },
+  "process": {
+    "title": "The Process",
+    "steps": [
+      {
+        "number": "01",
+        "title": "Analyze",
+        "description": "We conduct a thorough analysis of your current workflows."
+      },
+      {
+        "number": "02",
+        "title": "Build & Implement",
+        "description": "Our developers will start crafting custom AI solutions for your business."
+      },
+      {
+        "number": "03",
+        "title": "Maintain & Improve",
+        "description": "We continuously improve the implemented solutions to support your business growth."
+      }
+    ]
+  },
+  "stats": {
+    "items": [
+      { "value": "93+", "label": "Completed Projects" },
+      { "value": "100%", "label": "Customer Satisfaction" },
+      { "value": "3 Hours", "label": "Saved Daily" },
+      { "value": "$80K", "label": "Monthly Cost Savings" }
+    ]
+  },
+  "pricing": {
+    "title": "Pricing",
+    "subtitle": "Choose a monthly subscription plan that works for you.",
+    "monthly": "Monthly",
+    "annually": "Annually",
+    "popular": "Most Popular",
+    "choose": "Choose",
+    "choosePlan": "this plan",
+    "cancel": "Cancel or pause anytime",
+    "plans": [
+      {
+        "name": "Basic",
+        "price": "€750",
+        "features": [
+          "1 developer",
+          "Basic chatbots & LLMs",
+          "5 monthly workflow automations",
+          "50 monthly content creation requests",
+          "Cancel & pause anytime"
+        ]
+      },
+      {
+        "name": "Professional",
+        "price": "€1,500",
+        "features": [
+          "2 developers",
+          "Custom chatbots & LLMs",
+          "15 monthly workflow automations",
+          "100 monthly content creation requests",
+          "Cancel & pause anytime"
+        ]
+      },
+      {
+        "name": "Enterprise",
+        "price": "€3,000",
+        "features": [
+          "3 developers",
+          "Custom chatbots & LLMs",
+          "Unlimited workflow automations",
+          "Unlimited content creation requests",
+          "Cancel & pause anytime"
+        ]
+      }
+    ]
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "items": [
+      {
+        "question": "Is my company a good fit for Progmetia?",
+        "answer": "We work with businesses of all sizes that can benefit from AI solutions. We can schedule a free discovery call to assess your processes."
+      },
+      {
+        "question": "Are your solutions secure?",
+        "answer": "Yes. All our solutions are built to comply with industry-standard security protocols. Your data is encrypted and your privacy is always protected."
+      },
+      {
+        "question": "Do you offer continuous support?",
+        "answer": "Yes. All plans include ongoing support and maintenance. We proactively monitor implemented solutions and intervene when needed."
+      },
+      {
+        "question": "How long does it take to implement my requests?",
+        "answer": "It varies by scope. Simple automations are delivered in a few days, while complex LLM or chatbot projects may take a few weeks."
+      },
+      {
+        "question": "Can I get more than 3 developers?",
+        "answer": "Yes. For needs beyond the Enterprise plan, contact us and we'll prepare a custom offer for you."
+      },
+      {
+        "question": "Can I cancel my subscription at any time?",
+        "answer": "Yes. All plans are flexible and can be cancelled or paused at any time. There is no long-term contract requirement."
+      }
+    ]
+  },
+  "contact": {
+    "title": "Get in Touch",
+    "email": "Email",
+    "phone": "Phone",
+    "followUs": "Follow Us",
+    "emailValue": "info@progmetia.com",
+    "phoneValue": "+90 (xxx) xxx xx xx"
+  },
+  "footer": {
+    "description": "Taking your business into the future with artificial intelligence.",
+    "rights": "All rights reserved.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service"
+  }
+}

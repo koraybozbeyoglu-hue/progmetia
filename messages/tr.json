@@ -1,0 +1,163 @@
+{
+  "nav": {
+    "services": "Hizmetler",
+    "process": "Süreç",
+    "team": "Ekip",
+    "pricing": "Fiyatlandırma",
+    "reviews": "Yorumlar",
+    "faq": "SSS",
+    "contact": "İletişim",
+    "getStarted": "İletişime Geç"
+  },
+  "hero": {
+    "headline": "Progmetia AI stüdyosu.",
+    "subtitle": "Yenilikçi şirketler için özel yapay zeka çözümleri geliştiriyoruz.",
+    "cta": "İletişime geç",
+    "services": "Hizmetlerimiz"
+  },
+  "services": {
+    "title": "Ne Yapıyoruz",
+    "items": [
+      {
+        "title": "Chatbot Geliştirme",
+        "description": "Müşteri etkileşimlerini yükseltmek ve iş süreçlerinizi optimize etmek için gelişmiş NLP teknolojisini kullanan akıllı chatbotlar geliştiriyoruz."
+      },
+      {
+        "title": "İçerik Üretimi & Otomasyonu",
+        "description": "Markanızın kurallarına uygun, yüksek kaliteli ve ilgi çekici içerikleri büyük ölçekte zahmetsizce üreten çözümler sunuyoruz."
+      },
+      {
+        "title": "İş Akışı Otomasyonu",
+        "description": "Tekrarlayan görevleri ortadan kaldırmak, verimliliği artırmak, zaman kazanmak ve hataları önlemek için iş akışlarınızı otomatize ediyoruz."
+      },
+      {
+        "title": "LLM & Model Geliştirme",
+        "description": "Şirketinizin verilerle ve müşterilerle etkileşim biçimini dönüştüren Büyük Dil Modelleri geliştiriyoruz."
+      },
+      {
+        "title": "Stratejik AI Danışmanlığı",
+        "description": "Uzmanlarımız, işletmenizin dönüşüm sağlayan yapay zeka çözümlerini hayata geçirmesini mümkün kılan stratejik rehberlik sunuyor."
+      },
+      {
+        "title": "Özel AI Çözümleri",
+        "description": "Benzersiz iş zorluklarınıza özel tasarlanmış yapay zeka sistemleri geliştiriyoruz; konsept aşamasından üretime kadar her adımda yanınızdayız."
+      }
+    ]
+  },
+  "process": {
+    "title": "Çalışma Süreci",
+    "steps": [
+      {
+        "number": "01",
+        "title": "Analiz Et",
+        "description": "Mevcut iş akışlarınızın kapsamlı bir analizini yapıyoruz."
+      },
+      {
+        "number": "02",
+        "title": "Geliştir & Uygula",
+        "description": "Geliştiricilerimiz size özel yapay zeka çözümleri oluşturmaya başlıyor."
+      },
+      {
+        "number": "03",
+        "title": "Koru & Geliştir",
+        "description": "Uygulanan çözümleri sürekli iyileştirerek işletmenizin büyümesini destekliyoruz."
+      }
+    ]
+  },
+  "stats": {
+    "items": [
+      { "value": "93+", "label": "Tamamlanan Proje" },
+      { "value": "100%", "label": "Müşteri Memnuniyeti" },
+      { "value": "3 Saat", "label": "Günlük Tasarruf" },
+      { "value": "$80K", "label": "Aylık Maliyet Tasarrufu" }
+    ]
+  },
+  "pricing": {
+    "title": "Fiyatlandırma",
+    "subtitle": "Aylık abonelik planlarımızla ihtiyacınıza uygun çözümü seçin.",
+    "monthly": "Aylık",
+    "annually": "Yıllık",
+    "popular": "En Popüler",
+    "choose": "Seç",
+    "choosePlan": "bu planı",
+    "cancel": "İstediğin zaman iptal et veya duraklat",
+    "plans": [
+      {
+        "name": "Temel",
+        "price": "€750",
+        "features": [
+          "1 geliştirici",
+          "Temel chatbot ve LLM'ler",
+          "Aylık 5 iş akışı otomasyonu",
+          "Aylık 50 içerik üretimi isteği",
+          "İstediğin zaman iptal et veya duraklat"
+        ]
+      },
+      {
+        "name": "Profesyonel",
+        "price": "€1.500",
+        "features": [
+          "2 geliştirici",
+          "Özel chatbot ve LLM'ler",
+          "Aylık 15 iş akışı otomasyonu",
+          "Aylık 100 içerik üretimi isteği",
+          "İstediğin zaman iptal et veya duraklat"
+        ]
+      },
+      {
+        "name": "Kurumsal",
+        "price": "€3.000",
+        "features": [
+          "3 geliştirici",
+          "Özel chatbot ve LLM'ler",
+          "Sınırsız iş akışı otomasyonu",
+          "Sınırsız içerik üretimi isteği",
+          "İstediğin zaman iptal et veya duraklat"
+        ]
+      }
+    ]
+  },
+  "faq": {
+    "title": "Sıkça Sorulan Sorular",
+    "items": [
+      {
+        "question": "Şirketim Progmetia için uygun mu?",
+        "answer": "Yapay zeka çözümlerinden fayda sağlayabilecek her ölçekteki işletmeyle çalışıyoruz. Süreçlerinizi değerlendirmek için ücretsiz bir keşif görüşmesi ayarlayabiliriz."
+      },
+      {
+        "question": "Çözümleriniz güvenli mi?",
+        "answer": "Evet. Tüm çözümlerimiz endüstri standardı güvenlik protokollerine uygun şekilde geliştirilmektedir. Verileriniz şifrelenir ve gizliliğiniz her zaman korunur."
+      },
+      {
+        "question": "Sürekli destek sunuyor musunuz?",
+        "answer": "Evet. Tüm planlarımız süregelen destek ve bakım içermektedir. Uygulanan çözümleri proaktif olarak izliyor ve gerektiğinde müdahale ediyoruz."
+      },
+      {
+        "question": "İsteklerin hayata geçirilmesi ne kadar sürer?",
+        "answer": "Kapsama göre değişmekle birlikte basit otomasyonlar birkaç günde, karmaşık LLM veya chatbot projeleri ise birkaç haftada teslim edilmektedir."
+      },
+      {
+        "question": "3'ten fazla geliştirici alabilir miyim?",
+        "answer": "Evet. Kurumsal planın ötesinde özel ihtiyaçlarınız için bizimle iletişime geçin; size özel bir teklif hazırlayalım."
+      },
+      {
+        "question": "Aboneliğimi istediğim zaman iptal edebilir miyim?",
+        "answer": "Evet. Tüm planlar esnek olup istediğiniz zaman iptal edilebilir veya duraklatılabilir. Uzun vadeli sözleşme zorunluluğu yoktur."
+      }
+    ]
+  },
+  "contact": {
+    "title": "İletişime Geçin",
+    "email": "E-posta",
+    "phone": "Telefon",
+    "followUs": "Bizi Takip Edin",
+    "emailValue": "info@progmetia.com",
+    "phoneValue": "+90 (xxx) xxx xx xx"
+  },
+  "footer": {
+    "description": "Yapay zeka ile işletmenizi geleceğe taşıyoruz.",
+    "rights": "Tüm hakları saklıdır.",
+    "privacy": "Gizlilik Politikası",
+    "terms": "Kullanım Koşulları"
+  }
+}
