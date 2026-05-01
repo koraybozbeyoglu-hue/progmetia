@@ -44,6 +44,39 @@
       }
     ]
   },
+  "mockups": {
+    "chatbot": {
+      "userMsg": "Yarın saat 15:00'te John ile toplantı planla.",
+      "aiReply": "Tamam! Toplantı yarın 15:00'e ayarlandı. John'a bildirim gönderildi. ✓",
+      "aiStatic": "Tamam! Toplantıyı 15:00'e ayarladım. Takvim daveti gönderildi.",
+      "placeholder": "AI Asistana mesaj yaz..."
+    },
+    "content": {
+      "generating": "Görsel oluşturuluyor...",
+      "placeholder": "Bir görsel oluştur...",
+      "button": "Oluştur",
+      "done": "Oluşturuldu ✓"
+    },
+    "workflow": {
+      "label": "Otomasyon"
+    },
+    "llm": {
+      "title": "AI Sorgu Arayüzü",
+      "q1": "Quokka'lar nerede yaşar?",
+      "a1": "Quokka'lar Rottnest Adası'nda yaşar.",
+      "q2": "Ne ile beslenirler?",
+      "a2": "Bitkiler, yapraklar ve otla beslenirler.",
+      "placeholder": "Sorunuzu yazın..."
+    },
+    "consulting": {
+      "efficiency": "Verimlilik",
+      "cost": "Maliyet"
+    },
+    "custom": {
+      "deploying": "Model dağıtılıyor...",
+      "deployed": "Model başarıyla dağıtıldı"
+    }
+  },
   "process": {
     "title": "Çalışma Süreci",
     "steps": [

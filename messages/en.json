@@ -44,6 +44,39 @@
       }
     ]
   },
+  "mockups": {
+    "chatbot": {
+      "userMsg": "Schedule a meeting with John for tomorrow at 3PM.",
+      "aiReply": "Done! Meeting set for 3:00 PM tomorrow. John has been notified. ✓",
+      "aiStatic": "Done! I've scheduled the meeting for 3:00 PM. A calendar invite has been sent.",
+      "placeholder": "Message AI Assistant..."
+    },
+    "content": {
+      "generating": "Generating image...",
+      "placeholder": "Generate an image of...",
+      "button": "Generate",
+      "done": "Generated ✓"
+    },
+    "workflow": {
+      "label": "Automations"
+    },
+    "llm": {
+      "title": "AI Query Interface",
+      "q1": "Where do Quokkas live?",
+      "a1": "Quokkas live on Rottnest Island.",
+      "q2": "What is their diet?",
+      "a2": "They eat plants, leaves and grass.",
+      "placeholder": "Write your prompt..."
+    },
+    "consulting": {
+      "efficiency": "Efficiency",
+      "cost": "Cost"
+    },
+    "custom": {
+      "deploying": "Deploying model...",
+      "deployed": "Model deployed successfully"
+    }
+  },
   "process": {
     "title": "The Process",
     "steps": [

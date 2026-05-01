@@ -6,7 +6,14 @@ import { useState, useEffect } from 'react';
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
-function ChatbotMockup({ hovered }: { hovered: boolean }) {
+type ChatbotTx = { userMsg: string; aiReply: string; aiStatic: string; placeholder: string };
+type ContentTx = { generating: string; placeholder: string; button: string; done: string };
+type WorkflowTx = { label: string };
+type LLMTx = { title: string; q1: string; a1: string; q2: string; a2: string; placeholder: string };
+type ConsultingTx = { efficiency: string; cost: string };
+type CustomTx = { deploying: string; deployed: string };
+
+function ChatbotMockup({ hovered, tx }: { hovered: boolean; tx: ChatbotTx }) {
   const [phase, setPhase] = useState<'idle' | 'typing' | 'replied'>('idle');
 
   useEffect(() => {
@@ -24,7 +31,7 @@ function ChatbotMockup({ hovered }: { hovered: boolean }) {
       <div className="flex items-start gap-3">
         <div className="w-7 h-7 rounded-full bg-white/10 border border-white/15 flex items-center justify-center shrink-0 text-xs text-white/60">U</div>
         <div className="bg-white/8 border border-white/10 rounded-2xl rounded-tl-sm px-4 py-2.5 text-xs text-white/70 max-w-[78%]">
-          Schedule a meeting with John for tomorrow at 3PM.
+          {tx.userMsg}
         </div>
       </div>
 
@@ -61,7 +68,7 @@ function ChatbotMockup({ hovered }: { hovered: boolean }) {
           >
             <div className="w-7 h-7 rounded-full bg-blue-500/20 border border-blue-500/30 flex items-center justify-center shrink-0 text-xs text-blue-400 font-bold">AI</div>
             <div className="bg-blue-500/10 border border-blue-500/20 rounded-2xl rounded-tl-sm px-4 py-2.5 text-xs text-white/80 max-w-[78%]">
-              Done! Meeting set for 3:00 PM tomorrow. John has been notified. ✓
+              {tx.aiReply}
             </div>
           </motion.div>
         )}
@@ -74,14 +81,14 @@ function ChatbotMockup({ hovered }: { hovered: boolean }) {
           >
             <div className="w-7 h-7 rounded-full bg-blue-500/20 border border-blue-500/30 flex items-center justify-center shrink-0 text-xs text-blue-400 font-bold">AI</div>
             <div className="bg-blue-500/10 border border-blue-500/20 rounded-2xl rounded-tl-sm px-4 py-2.5 text-xs text-white/80 max-w-[78%]">
-              Done! I've scheduled the meeting for 3:00 PM. A calendar invite has been sent.
+              {tx.aiStatic}
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
       <div className="flex items-center gap-2 mt-1">
-        <div className="flex-1 bg-white/5 border border-white/10 rounded-full px-4 py-2 text-xs text-white/30">Message AI Assistant...</div>
+        <div className="flex-1 bg-white/5 border border-white/10 rounded-full px-4 py-2 text-xs text-white/30">{tx.placeholder}</div>
         <motion.div
           className="w-8 h-8 rounded-full bg-blue-500/20 border border-blue-500/30 flex items-center justify-center text-blue-400"
           animate={hovered ? { scale: [1, 1.12, 1] } : { scale: 1 }}
@@ -94,7 +101,7 @@ function ChatbotMockup({ hovered }: { hovered: boolean }) {
   );
 }
 
-function ContentMockup({ hovered }: { hovered: boolean }) {
+function ContentMockup({ hovered, tx }: { hovered: boolean; tx: ContentTx }) {
   const [generated, setGenerated] = useState(false);
 
   useEffect(() => {
@@ -128,7 +135,7 @@ function ContentMockup({ hovered }: { hovered: boolean }) {
                     />
                   ))}
                 </div>
-                <span className="text-white/40 text-xs">Generating image...</span>
+                <span className="text-white/40 text-xs">{tx.generating}</span>
               </div>
             </motion.div>
           ) : (
@@ -142,19 +149,19 @@ function ContentMockup({ hovered }: { hovered: boolean }) {
               <div className="w-full h-full bg-gradient-to-br from-blue-600/30 via-purple-600/20 to-indigo-600/30 flex items-center justify-center">
                 <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-400/60 to-purple-400/60 blur-sm" />
               </div>
-              <div className="absolute bottom-2 right-2 bg-black/50 border border-white/10 rounded px-2 py-0.5 text-[10px] text-white/60">Generated ✓</div>
+              <div className="absolute bottom-2 right-2 bg-black/50 border border-white/10 rounded px-2 py-0.5 text-[10px] text-white/60">{tx.done}</div>
             </motion.div>
           )}
         </AnimatePresence>
       </div>
       <div className="w-full flex items-center gap-2">
-        <div className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-xs text-white/30">Generate an image of...</div>
+        <div className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-xs text-white/30">{tx.placeholder}</div>
         <motion.div
           className="px-3 py-2 bg-white/8 border border-white/12 rounded-lg text-xs text-white/60 font-medium"
           animate={hovered ? { backgroundColor: 'rgba(59,130,246,0.2)', borderColor: 'rgba(59,130,246,0.3)' } : {}}
           transition={{ duration: 0.3 }}
         >
-          Generate
+          {tx.button}
         </motion.div>
       </div>
     </div>
@@ -174,7 +181,7 @@ const APP_ICONS = [
   <svg key="github" viewBox="0 0 24 24" className="w-3 h-3 fill-current text-white/60"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>,
 ];
 
-function WorkflowMockup({ hovered }: { hovered: boolean }) {
+function WorkflowMockup({ hovered, tx }: { hovered: boolean; tx: WorkflowTx }) {
   return (
     <div className="w-full h-full flex items-center justify-center p-5">
       <div className="relative flex items-center justify-center">
@@ -194,7 +201,7 @@ function WorkflowMockup({ hovered }: { hovered: boolean }) {
           transition={{ duration: 0.6, repeat: hovered ? Infinity : 0, repeatDelay: 0.4 }}
         >
           <span className="text-2xl font-bold text-white">100+</span>
-          <span className="text-white/50 text-xs">Automations</span>
+          <span className="text-white/50 text-xs">{tx.label}</span>
         </motion.div>
         {[0, 72, 144, 216, 288].map((deg, i) => (
           <motion.div
@@ -215,7 +222,7 @@ function WorkflowMockup({ hovered }: { hovered: boolean }) {
   );
 }
 
-function LLMMockup({ hovered }: { hovered: boolean }) {
+function LLMMockup({ hovered, tx }: { hovered: boolean; tx: LLMTx }) {
   const [showSecond, setShowSecond] = useState(false);
 
   useEffect(() => {
@@ -235,15 +242,15 @@ function LLMMockup({ hovered }: { hovered: boolean }) {
           animate={{ opacity: [0.5, 1, 0.5] }}
           transition={{ duration: 1.5, repeat: Infinity }}
         />
-        AI Query Interface
+        {tx.title}
       </div>
       <div className="space-y-1.5">
-        <div className="bg-white/5 border border-white/8 rounded-xl px-3 py-2 text-xs text-white/60">Where do Quokkas live?</div>
+        <div className="bg-white/5 border border-white/8 rounded-xl px-3 py-2 text-xs text-white/60">{tx.q1}</div>
         <div className="flex items-start gap-2">
           <div className="w-5 h-5 rounded bg-blue-500/20 flex items-center justify-center shrink-0 mt-0.5">
             <motion.div className="w-2 h-2 rounded-full bg-blue-400" animate={{ scale: [1, 1.3, 1] }} transition={{ duration: 1.5, repeat: Infinity }} />
           </div>
-          <div className="text-xs text-white/70">Quokkas live on Rottnest Island.</div>
+          <div className="text-xs text-white/70">{tx.a1}</div>
         </div>
       </div>
 
@@ -256,19 +263,19 @@ function LLMMockup({ hovered }: { hovered: boolean }) {
             transition={{ duration: 0.3 }}
             className="space-y-1.5"
           >
-            <div className="bg-white/5 border border-white/8 rounded-xl px-3 py-2 text-xs text-white/60">What is their diet?</div>
+            <div className="bg-white/5 border border-white/8 rounded-xl px-3 py-2 text-xs text-white/60">{tx.q2}</div>
             <div className="flex items-start gap-2">
               <div className="w-5 h-5 rounded bg-blue-500/20 flex items-center justify-center shrink-0 mt-0.5">
                 <motion.div className="w-2 h-2 rounded-full bg-blue-400" animate={{ scale: [1, 1.3, 1] }} transition={{ duration: 1.5, repeat: Infinity, delay: 0.3 }} />
               </div>
-              <div className="text-xs text-white/70">They eat plants, leaves and grass.</div>
+              <div className="text-xs text-white/70">{tx.a2}</div>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
       <div className="flex items-center gap-2 mt-auto">
-        <div className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-xs text-white/30">Write your prompt...</div>
+        <div className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-xs text-white/30">{tx.placeholder}</div>
         <motion.div
           className="w-7 h-7 rounded-lg bg-blue-500/20 border border-blue-500/30 flex items-center justify-center"
           animate={hovered ? { backgroundColor: 'rgba(59,130,246,0.3)' } : {}}
@@ -280,7 +287,7 @@ function LLMMockup({ hovered }: { hovered: boolean }) {
   );
 }
 
-function ConsultingMockup({ hovered }: { hovered: boolean }) {
+function ConsultingMockup({ hovered, tx }: { hovered: boolean; tx: ConsultingTx }) {
   const points = [10, 22, 18, 35, 30, 48, 42, 60, 55, 72];
   const max = Math.max(...points);
   const w = 240;
@@ -295,7 +302,7 @@ function ConsultingMockup({ hovered }: { hovered: boolean }) {
           animate={hovered ? { borderColor: 'rgba(74,222,128,0.3)', backgroundColor: 'rgba(74,222,128,0.05)' } : { borderColor: 'rgba(255,255,255,0.08)', backgroundColor: 'rgba(255,255,255,0.05)' }}
           transition={{ duration: 0.4 }}
         >
-          <div className="text-xs text-white/40 mb-1">Efficiency</div>
+          <div className="text-xs text-white/40 mb-1">{tx.efficiency}</div>
           <div className="text-lg font-bold text-green-400">+103%</div>
         </motion.div>
         <motion.div
@@ -303,7 +310,7 @@ function ConsultingMockup({ hovered }: { hovered: boolean }) {
           animate={hovered ? { borderColor: 'rgba(96,165,250,0.3)', backgroundColor: 'rgba(96,165,250,0.05)' } : { borderColor: 'rgba(255,255,255,0.08)', backgroundColor: 'rgba(255,255,255,0.05)' }}
           transition={{ duration: 0.4 }}
         >
-          <div className="text-xs text-white/40 mb-1">Cost</div>
+          <div className="text-xs text-white/40 mb-1">{tx.cost}</div>
           <div className="text-lg font-bold text-blue-400">-67%</div>
         </motion.div>
       </div>
@@ -345,7 +352,7 @@ function ConsultingMockup({ hovered }: { hovered: boolean }) {
   );
 }
 
-function CustomAIMockup({ hovered }: { hovered: boolean }) {
+function CustomAIMockup({ hovered, tx }: { hovered: boolean; tx: CustomTx }) {
   const [showResult, setShowResult] = useState(false);
 
   useEffect(() => {
@@ -380,7 +387,7 @@ function CustomAIMockup({ hovered }: { hovered: boolean }) {
               transition={{ duration: 0.3 }}
               className="text-green-400/90 flex items-center gap-1 mt-1"
             >
-              ✓ <span className="text-white/60">Model deployed successfully</span>
+              ✓ <span className="text-white/60">{tx.deployed}</span>
             </motion.div>
           ) : (
             <motion.div
@@ -389,7 +396,7 @@ function CustomAIMockup({ hovered }: { hovered: boolean }) {
               animate={{ opacity: [1, 0, 1] }}
               transition={{ duration: 1.2, repeat: Infinity }}
             >
-              ▸ <span className="text-white/50">Deploying model...</span>
+              ▸ <span className="text-white/50">{tx.deploying}</span>
             </motion.div>
           )}
         </AnimatePresence>
@@ -398,16 +405,24 @@ function CustomAIMockup({ hovered }: { hovered: boolean }) {
   );
 }
 
-const mockupComponents = [ChatbotMockup, ContentMockup, WorkflowMockup, LLMMockup, ConsultingMockup, CustomAIMockup];
-
 export default function Services() {
   const t = useTranslations('services');
+  const m = useTranslations('mockups');
   const items = t.raw('items') as { title: string; description: string }[];
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   const titleWords = t('title').split(' ');
   const lastWord = titleWords.pop();
   const firstWords = titleWords.join(' ');
+
+  const txList = [
+    { userMsg: m('chatbot.userMsg'), aiReply: m('chatbot.aiReply'), aiStatic: m('chatbot.aiStatic'), placeholder: m('chatbot.placeholder') },
+    { generating: m('content.generating'), placeholder: m('content.placeholder'), button: m('content.button'), done: m('content.done') },
+    { label: m('workflow.label') },
+    { title: m('llm.title'), q1: m('llm.q1'), a1: m('llm.a1'), q2: m('llm.q2'), a2: m('llm.a2'), placeholder: m('llm.placeholder') },
+    { efficiency: m('consulting.efficiency'), cost: m('consulting.cost') },
+    { deploying: m('custom.deploying'), deployed: m('custom.deployed') },
+  ] as const;
 
   return (
     <section id="services" className="py-28 px-6">
@@ -427,8 +442,8 @@ export default function Services() {
         {/* Row 1: 2 large cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {items.slice(0, 2).map((item, index) => {
-            const Mockup = mockupComponents[index];
             const isHovered = hoveredIndex === index;
+            const tx = txList[index];
             return (
               <motion.div
                 key={index}
@@ -442,7 +457,8 @@ export default function Services() {
                 onMouseLeave={() => setHoveredIndex(null)}
               >
                 <div className="h-52 border-b border-white/6">
-                  <Mockup hovered={isHovered} />
+                  {index === 0 && <ChatbotMockup hovered={isHovered} tx={tx as ChatbotTx} />}
+                  {index === 1 && <ContentMockup hovered={isHovered} tx={tx as ContentTx} />}
                 </div>
                 <div className="p-6">
                   <h3 className="text-white font-semibold text-lg mb-2">{item.title}</h3>
@@ -456,9 +472,9 @@ export default function Services() {
         {/* Row 2: 4 smaller cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
           {items.slice(2).map((item, index) => {
-            const Mockup = mockupComponents[index + 2];
             const cardIndex = index + 2;
             const isHovered = hoveredIndex === cardIndex;
+            const tx = txList[cardIndex];
             return (
               <motion.div
                 key={index}
@@ -472,7 +488,10 @@ export default function Services() {
                 onMouseLeave={() => setHoveredIndex(null)}
               >
                 <div className="h-40 border-b border-white/6">
-                  <Mockup hovered={isHovered} />
+                  {cardIndex === 2 && <WorkflowMockup hovered={isHovered} tx={tx as WorkflowTx} />}
+                  {cardIndex === 3 && <LLMMockup hovered={isHovered} tx={tx as LLMTx} />}
+                  {cardIndex === 4 && <ConsultingMockup hovered={isHovered} tx={tx as ConsultingTx} />}
+                  {cardIndex === 5 && <CustomAIMockup hovered={isHovered} tx={tx as CustomTx} />}
                 </div>
                 <div className="p-5">
                   <h3 className="text-white font-semibold text-sm mb-1.5">{item.title}</h3>
