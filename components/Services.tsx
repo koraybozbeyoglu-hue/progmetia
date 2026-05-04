@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -111,120 +111,131 @@ function ChatbotMockup({ hovered, tx }: { hovered: boolean; tx: ChatbotTx }) {
   );
 }
 
+type StarParticle = { x: number; y: number; r: number; op: number; spd: number; dir: 1 | -1 };
+type Meteor = { x: number; y: number; vx: number; vy: number; tail: number; life: number };
+
 function ContentMockup({ hovered, tx }: { hovered: boolean; tx: ContentTx }) {
-  const [scanDone, setScanDone] = useState(false);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const rafRef = useRef<number>(0);
 
   useEffect(() => {
-    setScanDone(false);
-    if (!hovered) return;
-    const t = setTimeout(() => setScanDone(true), 1750);
-    return () => clearTimeout(t);
-  }, [hovered]);
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const W = canvas.offsetWidth;
+    const H = canvas.offsetHeight;
+    const DPR = window.devicePixelRatio || 1;
+    canvas.width = W * DPR;
+    canvas.height = H * DPR;
+    ctx.scale(DPR, DPR);
+
+    // 80 stars with random twinkle speeds
+    const stars: StarParticle[] = Array.from({ length: 80 }, () => ({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      r: Math.random() * 1.3 + 0.2,
+      op: Math.random(),
+      spd: Math.random() * 0.007 + 0.002,
+      dir: (Math.random() > 0.5 ? 1 : -1) as 1 | -1,
+    }));
+
+    const meteors: Meteor[] = [];
+    let lastMeteor = 0;
+
+    const draw = (now: number) => {
+      if (lastMeteor === 0) lastMeteor = now;
+
+      ctx.clearRect(0, 0, W, H);
+
+      // Deep space background
+      const bg = ctx.createLinearGradient(0, 0, 0, H);
+      bg.addColorStop(0, '#02020d');
+      bg.addColorStop(1, '#06071a');
+      ctx.fillStyle = bg;
+      ctx.fillRect(0, 0, W, H);
+
+      // Twinkling stars
+      for (const s of stars) {
+        s.op += s.spd * s.dir;
+        if (s.op >= 1) { s.op = 1; s.dir = -1; }
+        else if (s.op <= 0) { s.op = 0; s.dir = 1; }
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(220,230,255,${s.op})`;
+        ctx.fill();
+      }
+
+      // Spawn meteor every 3–5 s
+      if (now - lastMeteor > 3000 + Math.random() * 2000) {
+        lastMeteor = now;
+        const angle = (15 + Math.random() * 20) * (Math.PI / 180);
+        const spd = 4 + Math.random() * 3;
+        meteors.push({
+          x: Math.random() * W * 0.65,
+          y: Math.random() * H * 0.45,
+          vx: Math.cos(angle) * spd,
+          vy: Math.sin(angle) * spd,
+          tail: 55 + Math.random() * 35,
+          life: 1,
+        });
+      }
+
+      // Draw meteors
+      for (let i = meteors.length - 1; i >= 0; i--) {
+        const m = meteors[i];
+        m.x += m.vx;
+        m.y += m.vy;
+        m.life -= 0.022;
+        if (m.life <= 0 || m.x > W + 20 || m.y > H + 20) {
+          meteors.splice(i, 1);
+          continue;
+        }
+        const tx2 = m.x - (m.vx / Math.hypot(m.vx, m.vy)) * m.tail;
+        const ty2 = m.y - (m.vy / Math.hypot(m.vx, m.vy)) * m.tail;
+        const g = ctx.createLinearGradient(m.x, m.y, tx2, ty2);
+        g.addColorStop(0, `rgba(255,255,255,${m.life * 0.95})`);
+        g.addColorStop(0.3, `rgba(180,200,255,${m.life * 0.5})`);
+        g.addColorStop(1, 'rgba(180,200,255,0)');
+        ctx.beginPath();
+        ctx.moveTo(m.x, m.y);
+        ctx.lineTo(tx2, ty2);
+        ctx.strokeStyle = g;
+        ctx.lineWidth = 1.8;
+        ctx.lineCap = 'round';
+        ctx.stroke();
+        // Bright head
+        ctx.beginPath();
+        ctx.arc(m.x, m.y, 1.2, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255,255,255,${m.life})`;
+        ctx.fill();
+      }
+
+      rafRef.current = requestAnimationFrame(draw);
+    };
+
+    rafRef.current = requestAnimationFrame(draw);
+    return () => cancelAnimationFrame(rafRef.current);
+  }, []);
 
   return (
     <div className="w-full h-full flex flex-col gap-2 p-4">
       <div className="relative flex-1 rounded-xl overflow-hidden border border-white/8">
+        <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
 
-        {/* Sky — always visible, blurred+dim when idle */}
-        <motion.div
-          className="absolute inset-0"
-          animate={hovered ? { filter: 'blur(0px)', opacity: 1 } : { filter: 'blur(3px)', opacity: 0.45 }}
-          transition={{ duration: 1.6 }}
-        >
-          {/* Sunset gradient */}
-          <div
-            className="absolute inset-0"
-            style={{ background: 'linear-gradient(180deg,#060520 0%,#150840 18%,#4d0f88 34%,#a31f72 50%,#d44f25 64%,#e8890c 77%,#f5c230 89%,#fde590 100%)' }}
+        {/* Badge */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 pointer-events-none">
+          <div className="bg-black/75 border border-white/15 rounded-full px-4 py-1.5 text-[11px] text-white/80 backdrop-blur-sm whitespace-nowrap tracking-wide">
+            {tx.generating}
+          </div>
+          <motion.div
+            className="h-px w-16 rounded-full"
+            style={{ background: 'linear-gradient(to right, transparent, rgba(160,180,255,0.85), transparent)' }}
+            animate={{ opacity: [0.2, 1, 0.2], scaleX: [0.5, 1, 0.5] }}
+            transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
           />
-          {/* Sun glow */}
-          <div
-            className="absolute"
-            style={{
-              bottom: '14%', left: '50%', transform: 'translateX(-50%)',
-              width: '72%', height: '36%',
-              background: 'radial-gradient(ellipse 70% 55% at 50% 100%, rgba(246,196,46,0.55), rgba(232,137,12,0.35), transparent)',
-              filter: 'blur(12px)',
-            }}
-          />
-          {/* High cloud — purple-lit */}
-          <div
-            className="absolute"
-            style={{
-              top: '18%', left: '-6%', right: '-6%', height: '22%',
-              background: 'radial-gradient(ellipse 88% 100% at 38% 50%, rgba(167,82,246,0.42), transparent 60%), radial-gradient(ellipse 65% 100% at 72% 50%, rgba(120,55,230,0.32), transparent 60%)',
-              filter: 'blur(9px)',
-            }}
-          />
-          {/* Low cloud — golden-lit */}
-          <div
-            className="absolute"
-            style={{
-              top: '44%', left: '-10%', right: '-10%', height: '22%',
-              background: 'radial-gradient(ellipse 55% 100% at 28% 100%, rgba(249,115,22,0.42), transparent 70%), radial-gradient(ellipse 48% 100% at 68% 100%, rgba(245,158,11,0.38), transparent 70%)',
-              filter: 'blur(7px)',
-            }}
-          />
-          {/* Horizon haze */}
-          <div
-            className="absolute inset-x-0 bottom-0 h-[28%]"
-            style={{ background: 'linear-gradient(to top, rgba(245,196,46,0.28), transparent)' }}
-          />
-          {/* Mountain silhouette */}
-          <svg className="absolute bottom-0 left-0 right-0 w-full" viewBox="0 0 400 66" preserveAspectRatio="none">
-            <path d="M0,66 L0,50 L34,23 L60,39 L88,12 L116,31 L146,5 L176,25 L206,10 L234,29 L260,14 L288,32 L316,8 L345,22 L376,36 L400,26 L400,66 Z" fill="#020209" />
-          </svg>
-        </motion.div>
-
-        {/* Golden scan line */}
-        <AnimatePresence>
-          {hovered && !scanDone && (
-            <motion.div
-              key="scan"
-              className="absolute inset-x-0 h-[2px] pointer-events-none"
-              style={{
-                background: 'linear-gradient(to right, transparent, rgba(245,196,60,0.95) 20%, rgba(255,255,220,0.95) 50%, rgba(245,196,60,0.95) 80%, transparent)',
-                boxShadow: '0 0 16px 5px rgba(245,180,40,0.5)',
-              }}
-              initial={{ top: 0 }}
-              animate={{ top: '100%' }}
-              transition={{ duration: 1.75, ease: 'linear' }}
-            />
-          )}
-        </AnimatePresence>
-
-        {/* Center badge */}
-        <AnimatePresence mode="wait">
-          {!scanDone && (
-            <motion.div
-              key="gen"
-              className="absolute inset-0 flex flex-col items-center justify-center gap-2 pointer-events-none"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.25 }}
-            >
-              <div className="bg-black/80 border border-white/15 rounded-full px-4 py-1.5 text-[11px] text-white/85 backdrop-blur-sm whitespace-nowrap tracking-wide">
-                {tx.generating}
-              </div>
-              <motion.div
-                className="h-px w-16 rounded-full"
-                style={{ background: 'linear-gradient(to right, transparent, rgba(245,196,60,0.9), transparent)' }}
-                animate={{ opacity: [0.3, 1, 0.3], scaleX: [0.5, 1, 0.5] }}
-                transition={{ duration: 1.3, repeat: Infinity, ease: 'easeInOut' }}
-              />
-            </motion.div>
-          )}
-          {scanDone && (
-            <motion.div
-              key="done"
-              initial={{ opacity: 0, y: 5 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="absolute bottom-2.5 right-2.5 bg-black/70 border border-white/12 rounded-full px-2.5 py-0.5 text-[10px] text-green-400/90"
-            >
-              {tx.done}
-            </motion.div>
-          )}
-        </AnimatePresence>
+        </div>
       </div>
 
       {/* Input bar */}
@@ -233,7 +244,7 @@ function ContentMockup({ hovered, tx }: { hovered: boolean; tx: ContentTx }) {
         <motion.div
           className="px-3 py-2 rounded-lg text-xs font-medium shrink-0 border"
           animate={hovered
-            ? { backgroundColor: 'rgba(245,158,11,0.18)', borderColor: 'rgba(245,158,11,0.38)', color: 'rgba(255,255,255,0.9)' }
+            ? { backgroundColor: 'rgba(99,102,241,0.2)', borderColor: 'rgba(99,102,241,0.38)', color: 'rgba(255,255,255,0.9)' }
             : { backgroundColor: 'rgba(255,255,255,0.05)', borderColor: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.5)' }
           }
           transition={{ duration: 0.3 }}
