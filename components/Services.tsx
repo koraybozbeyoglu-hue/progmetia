@@ -111,7 +111,7 @@ function ChatbotMockup({ hovered, tx }: { hovered: boolean; tx: ChatbotTx }) {
   );
 }
 
-type StarParticle = { x: number; y: number; r: number; op: number; spd: number; dir: 1 | -1 };
+type StarParticle = { x: number; y: number; r: number; op: number; spd: number; dir: 1 | -1; dx: number; dy: number };
 type Meteor = { x: number; y: number; vx: number; vy: number; tail: number; life: number };
 
 function ContentMockup({ hovered, tx }: { hovered: boolean; tx: ContentTx }) {
@@ -131,15 +131,21 @@ function ContentMockup({ hovered, tx }: { hovered: boolean; tx: ContentTx }) {
     canvas.height = H * DPR;
     ctx.scale(DPR, DPR);
 
-    // 80 stars with random twinkle speeds
-    const stars: StarParticle[] = Array.from({ length: 80 }, () => ({
-      x: Math.random() * W,
-      y: Math.random() * H,
-      r: Math.random() * 1.3 + 0.2,
-      op: Math.random(),
-      spd: Math.random() * 0.007 + 0.002,
-      dir: (Math.random() > 0.5 ? 1 : -1) as 1 | -1,
-    }));
+    // 35 stars with slow drift + twinkle
+    const stars: StarParticle[] = Array.from({ length: 35 }, () => {
+      const angle = Math.random() * Math.PI * 2;
+      const spd = 0.08 + Math.random() * 0.12;
+      return {
+        x: Math.random() * W,
+        y: Math.random() * H,
+        r: Math.random() * 1.3 + 0.25,
+        op: Math.random(),
+        spd: Math.random() * 0.006 + 0.002,
+        dir: (Math.random() > 0.5 ? 1 : -1) as 1 | -1,
+        dx: Math.cos(angle) * spd,
+        dy: Math.sin(angle) * spd,
+      };
+    });
 
     const meteors: Meteor[] = [];
     let lastMeteor = 0;
@@ -156,8 +162,14 @@ function ContentMockup({ hovered, tx }: { hovered: boolean; tx: ContentTx }) {
       ctx.fillStyle = bg;
       ctx.fillRect(0, 0, W, H);
 
-      // Twinkling stars
+      // Twinkling + drifting stars
       for (const s of stars) {
+        s.x += s.dx;
+        s.y += s.dy;
+        if (s.x < -2) s.x = W + 2;
+        else if (s.x > W + 2) s.x = -2;
+        if (s.y < -2) s.y = H + 2;
+        else if (s.y > H + 2) s.y = -2;
         s.op += s.spd * s.dir;
         if (s.op >= 1) { s.op = 1; s.dir = -1; }
         else if (s.op <= 0) { s.op = 0; s.dir = 1; }
