@@ -6,6 +6,16 @@ import { useState, useEffect } from 'react';
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
+const SKY_STARS = [
+  { x: 8, y: 10, r: 1.2, d: 0.0 }, { x: 22, y: 6, r: 0.8, d: 0.4 },
+  { x: 38, y: 14, r: 1.5, d: 0.8 }, { x: 52, y: 4, r: 1.0, d: 0.2 },
+  { x: 67, y: 17, r: 0.8, d: 1.0 }, { x: 82, y: 8, r: 1.5, d: 0.6 },
+  { x: 14, y: 32, r: 0.8, d: 0.5 }, { x: 33, y: 26, r: 1.2, d: 0.9 },
+  { x: 48, y: 38, r: 0.8, d: 0.1 }, { x: 63, y: 22, r: 1.5, d: 0.7 },
+  { x: 76, y: 35, r: 0.8, d: 0.3 }, { x: 91, y: 28, r: 1.2, d: 1.1 },
+  { x: 5, y: 48, r: 0.8, d: 0.6 }, { x: 94, y: 52, r: 1.2, d: 0.8 },
+];
+
 type ChatbotTx = { userMsg: string; aiReply: string; aiStatic: string; placeholder: string };
 type ContentTx = { generating: string; placeholder: string; button: string; done: string };
 type WorkflowTx = { label: string };
@@ -102,58 +112,94 @@ function ChatbotMockup({ hovered, tx }: { hovered: boolean; tx: ChatbotTx }) {
 }
 
 function ContentMockup({ hovered, tx }: { hovered: boolean; tx: ContentTx }) {
-  const [generated, setGenerated] = useState(false);
-
-  useEffect(() => {
-    if (hovered) {
-      const t = setTimeout(() => setGenerated(true), 900);
-      return () => clearTimeout(t);
-    } else {
-      setGenerated(false);
-    }
-  }, [hovered]);
-
   return (
     <div className="w-full h-full flex flex-col items-center justify-center gap-4 p-6">
-      <div className="w-full aspect-video rounded-xl border border-white/8 flex items-center justify-center relative overflow-hidden">
-        <AnimatePresence mode="wait">
-          {!generated ? (
+      <div className="w-full aspect-video rounded-xl border border-white/8 relative overflow-hidden">
+        {/* Night sky gradient */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#04040f] via-[#0b0e2e] to-[#1a0f40]" />
+
+        {/* Aurora band */}
+        <motion.div
+          className="absolute inset-x-0 bottom-0 h-2/5 rounded-b-xl"
+          style={{ background: 'linear-gradient(to top, rgba(79,70,229,0.25), rgba(139,92,246,0.12), transparent)' }}
+          animate={{ opacity: hovered ? 0.9 : 0.5 }}
+          transition={{ duration: 2 }}
+        />
+
+        {/* Stars */}
+        {SKY_STARS.map((s, i) => (
+          <motion.div
+            key={i}
+            className="absolute rounded-full bg-white"
+            style={{ left: `${s.x}%`, top: `${s.y}%`, width: s.r * 2, height: s.r * 2 }}
+            animate={{ opacity: [0.2, 0.9, 0.2] }}
+            transition={{ duration: 2 + s.d, repeat: Infinity, delay: s.d, ease: 'easeInOut' }}
+          />
+        ))}
+
+        {/* Moon */}
+        <motion.div
+          className="absolute rounded-full bg-[#fff8d0]"
+          style={{ right: '18%', top: '12%', width: 26, height: 26 }}
+          animate={{
+            boxShadow: hovered
+              ? '0 0 0 3px rgba(255,248,200,0.15), 0 0 28px 12px rgba(255,220,80,0.28)'
+              : '0 0 0 2px rgba(255,248,200,0.07), 0 0 14px 4px rgba(255,220,80,0.14)',
+          }}
+          transition={{ duration: 1.5 }}
+        />
+
+        {/* Cloud 1 */}
+        <motion.div
+          className="absolute top-[40%] rounded-full bg-white/[0.06] blur-sm"
+          style={{ left: '6%', width: 76, height: 20 }}
+          animate={{ x: hovered ? 18 : 0, opacity: hovered ? 0.55 : 0.25 }}
+          transition={{ duration: 3, ease: 'easeInOut' }}
+        />
+
+        {/* Cloud 2 */}
+        <motion.div
+          className="absolute top-[58%] rounded-full bg-white/[0.05] blur-sm"
+          style={{ right: '8%', width: 58, height: 15 }}
+          animate={{ x: hovered ? -12 : 0, opacity: hovered ? 0.45 : 0.18 }}
+          transition={{ duration: 3.5, ease: 'easeInOut' }}
+        />
+
+        {/* Shooting star */}
+        <AnimatePresence>
+          {hovered && (
             <motion.div
-              key="generating"
-              initial={{ opacity: 1 }}
+              key="shoot"
+              className="absolute rounded-full"
+              style={{
+                width: 42, height: 1.5, top: '20%', left: '15%',
+                rotate: -25,
+                background: 'linear-gradient(to right, transparent, rgba(255,255,255,0.85))',
+              }}
+              initial={{ opacity: 0, x: -8 }}
+              animate={{ opacity: [0, 1, 0], x: 64 }}
               exit={{ opacity: 0 }}
-              className="absolute inset-0 bg-gradient-to-br from-white/5 to-white/2 flex items-center justify-center"
-            >
-              <div className="flex flex-col items-center gap-2">
-                <div className="flex gap-1">
-                  {[...Array(3)].map((_, i) => (
-                    <motion.div
-                      key={i}
-                      className="w-1.5 h-1.5 rounded-full bg-blue-400"
-                      animate={{ opacity: [0.3, 1, 0.3], y: [0, -3, 0] }}
-                      transition={{ duration: hovered ? 0.5 : 1.2, repeat: Infinity, delay: i * 0.2 }}
-                    />
-                  ))}
-                </div>
-                <span className="text-white/40 text-xs">{tx.generating}</span>
-              </div>
-            </motion.div>
-          ) : (
+              transition={{ duration: 0.7, delay: 0.5 }}
+            />
+          )}
+        </AnimatePresence>
+
+        {/* Done badge */}
+        <AnimatePresence>
+          {hovered && (
             <motion.div
-              key="result"
-              initial={{ opacity: 0, scale: 1.04 }}
+              initial={{ opacity: 0, scale: 0.85 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5 }}
-              className="absolute inset-0"
+              exit={{ opacity: 0 }}
+              transition={{ delay: 1.0, duration: 0.35 }}
+              className="absolute bottom-2 right-2 bg-black/60 border border-white/10 rounded px-2 py-0.5 text-[10px] text-white/60"
             >
-              <div className="w-full h-full bg-gradient-to-br from-blue-600/30 via-purple-600/20 to-indigo-600/30 flex items-center justify-center">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-400/60 to-purple-400/60 blur-sm" />
-              </div>
-              <div className="absolute bottom-2 right-2 bg-black/50 border border-white/10 rounded px-2 py-0.5 text-[10px] text-white/60">{tx.done}</div>
+              {tx.done}
             </motion.div>
           )}
         </AnimatePresence>
       </div>
+
       <div className="w-full flex items-center gap-2">
         <div className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-xs text-white/30">{tx.placeholder}</div>
         <motion.div
