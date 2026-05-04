@@ -125,7 +125,7 @@
     "plans": [
       {
         "name": "Temel",
-        "price": "€750",
+        "price": "€250",
         "features": [
           "1 geliştirici",
           "Temel chatbot ve LLM'ler",
@@ -136,7 +136,7 @@
       },
       {
         "name": "Profesyonel",
-        "price": "€1.500",
+        "price": "€1.000",
         "features": [
           "2 geliştirici",
           "Özel chatbot ve LLM'ler",
@@ -147,7 +147,7 @@
       },
       {
         "name": "Kurumsal",
-        "price": "€3.000",
+        "price": "€2.000",
         "features": [
           "3 geliştirici",
           "Özel chatbot ve LLM'ler",

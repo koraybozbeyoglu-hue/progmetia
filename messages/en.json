@@ -125,7 +125,7 @@
     "plans": [
       {
         "name": "Basic",
-        "price": "€750",
+        "price": "€250",
         "features": [
           "1 developer",
           "Basic chatbots & LLMs",
@@ -136,7 +136,7 @@
       },
       {
         "name": "Professional",
-        "price": "€1,500",
+        "price": "€1,000",
         "features": [
           "2 developers",
           "Custom chatbots & LLMs",
@@ -147,7 +147,7 @@
       },
       {
         "name": "Enterprise",
-        "price": "€3,000",
+        "price": "€2,000",
         "features": [
           "3 developers",
           "Custom chatbots & LLMs",
