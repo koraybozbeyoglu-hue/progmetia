@@ -35,8 +35,32 @@ export default function Navbar() {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50">
       <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-        <a href="#" className="text-lg font-bold tracking-tight text-white">
-          Prog<span className="text-blue-400">metia</span>
+        <a href="#" className="flex items-center gap-2.5 group">
+          {/* Logo mark: circuit-style P */}
+          <svg width="22" height="26" viewBox="0 0 22 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="logoArc" x1="4" y1="3" x2="18" y2="13" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stopColor="#60a5fa" />
+                <stop offset="100%" stopColor="#818cf8" />
+              </linearGradient>
+              <filter id="logoGlow">
+                <feGaussianBlur stdDeviation="0.6" result="blur" />
+                <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+              </filter>
+            </defs>
+            {/* Stem */}
+            <line x1="4" y1="3" x2="4" y2="23" stroke="white" strokeWidth="2" strokeLinecap="round" />
+            {/* Arc — the P bump */}
+            <path d="M4 3 C4 3 18 3 18 10.5 C18 18 4 18 4 18" stroke="url(#logoArc)" strokeWidth="2" fill="none" strokeLinecap="round" />
+            {/* Nodes */}
+            <circle cx="4" cy="3" r="2.5" fill="#60a5fa" filter="url(#logoGlow)" />
+            <circle cx="4" cy="18" r="2.5" fill="#60a5fa" filter="url(#logoGlow)" />
+            <circle cx="18" cy="10.5" r="1.8" fill="#818cf8" opacity="0.85" />
+          </svg>
+          {/* Wordmark */}
+          <span className="text-lg font-bold tracking-tight text-white">
+            Prog<span className="text-blue-400">metia</span>
+          </span>
         </a>
 
         {/* Center nav links in pill */}
