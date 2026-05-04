@@ -397,7 +397,7 @@ function ConsultingMockup({ hovered, tx }: { hovered: boolean; tx: ConsultingTx 
   const pts = points.map((p, i) => `${(i / (points.length - 1)) * w},${h - (p / max) * h}`).join(' ');
 
   return (
-    <div className="w-full h-full flex flex-col justify-center p-4 gap-2">
+    <div className="w-full h-full flex flex-col justify-center p-3 gap-2">
       <div className="flex gap-3">
         <motion.div
           className="flex-1 bg-white/5 border border-white/8 rounded-xl p-3"
