@@ -108,7 +108,7 @@
     "items": [
       { "value": "4", "label": "Completed Projects" },
       { "value": "100%", "label": "Customer Satisfaction" },
-      { "value": "3 Hours", "label": "Saved Daily" },
+      { "value": "9 Hours", "label": "Saved Daily" },
       { "value": "$4,500", "label": "Monthly Cost Savings" }
     ]
   },
