@@ -38,9 +38,8 @@ export default function Contact() {
             viewport={{ once: true, margin: '-80px' }}
             transition={{ duration: 0.7, ease: EASE }}
           >
-            <h2 className="text-5xl md:text-6xl font-bold leading-tight mb-12">
-              <span className="text-white">{titleMain} </span>
-              <span className="text-blue-400">{titleHighlight}</span>
+            <h2 className="text-5xl md:text-6xl font-bold leading-tight mb-12 bg-gradient-to-r from-white to-blue-400 bg-clip-text text-transparent">
+              {t('title')}
             </h2>
 
             {/* Email */}
