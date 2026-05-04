@@ -79,6 +79,13 @@
   },
   "process": {
     "title": "Çalışma Süreci",
+    "metrics": {
+      "speed": "Yazılım hızı",
+      "efficiency": "İş akışı verimliliği",
+      "cost": "Operasyonel maliyet",
+      "update": "Güncelleme mevcut",
+      "updateBtn": "Güncelle ↑"
+    },
     "steps": [
       {
         "number": "01",
@@ -110,6 +117,7 @@
     "subtitle": "Aylık abonelik planlarımızla ihtiyacınıza uygun çözümü seçin.",
     "monthly": "Aylık",
     "annually": "Yıllık",
+    "billedAnnually": "yıllık faturalandırılır",
     "popular": "En Popüler",
     "choose": "Seç",
     "choosePlan": "bu planı",

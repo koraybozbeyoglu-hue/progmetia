@@ -113,13 +113,14 @@ function BuildMockup({ hovered }: { hovered: boolean }) {
   );
 }
 
-const METRICS = [
-  { label: 'Software speed', value: '+38%', color: 'text-green-400' },
-  { label: 'Workflow efficiency', value: '+25%', color: 'text-blue-400' },
-  { label: 'Operational cost', value: '-11%', color: 'text-green-400' },
-];
+type MaintainTx = { speed: string; efficiency: string; cost: string; update: string; updateBtn: string };
 
-function MaintainMockup({ hovered }: { hovered: boolean }) {
+function MaintainMockup({ hovered, tx }: { hovered: boolean; tx: MaintainTx }) {
+  const METRICS = [
+    { label: tx.speed, value: '+38%', color: 'text-green-400' },
+    { label: tx.efficiency, value: '+25%', color: 'text-blue-400' },
+    { label: tx.cost, value: '-11%', color: 'text-green-400' },
+  ];
   const [showUpdate, setShowUpdate] = useState(false);
 
   useEffect(() => {
@@ -159,9 +160,9 @@ function MaintainMockup({ hovered }: { hovered: boolean }) {
             transition={{ duration: 0.3 }}
             className="flex items-center justify-between px-3 py-2 rounded-lg bg-blue-500/10 border border-blue-500/20"
           >
-            <span className="text-xs text-white/70">Update available</span>
+            <span className="text-xs text-white/70">{tx.update}</span>
             <div className="px-2 py-0.5 bg-blue-500/30 border border-blue-500/40 rounded text-[10px] text-blue-300 font-medium flex items-center gap-1">
-              Update ↑
+              {tx.updateBtn}
             </div>
           </motion.div>
         )}
@@ -170,12 +171,17 @@ function MaintainMockup({ hovered }: { hovered: boolean }) {
   );
 }
 
-const stepMockups = [AnalyzeMockup, BuildMockup, MaintainMockup];
-
 export default function Process() {
   const t = useTranslations('process');
   const steps = t.raw('steps') as { number: string; title: string; description: string }[];
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const maintainTx: MaintainTx = {
+    speed: t('metrics.speed'),
+    efficiency: t('metrics.efficiency'),
+    cost: t('metrics.cost'),
+    update: t('metrics.update'),
+    updateBtn: t('metrics.updateBtn'),
+  };
 
   const titleWords = t('title').split(' ');
   const lastWord = titleWords.pop();
@@ -198,7 +204,6 @@ export default function Process() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {steps.map((step, index) => {
-            const Mockup = stepMockups[index];
             const isHovered = hoveredIndex === index;
             return (
               <motion.div
@@ -213,7 +218,9 @@ export default function Process() {
                 onMouseLeave={() => setHoveredIndex(null)}
               >
                 <div className="h-48 border-b border-white/6">
-                  <Mockup hovered={isHovered} />
+                  {index === 0 && <AnalyzeMockup hovered={isHovered} />}
+                  {index === 1 && <BuildMockup hovered={isHovered} />}
+                  {index === 2 && <MaintainMockup hovered={isHovered} tx={maintainTx} />}
                 </div>
                 <div className="p-6">
                   <div className="text-xs text-white/30 font-mono mb-2">{step.number}</div>

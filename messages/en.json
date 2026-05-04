@@ -79,6 +79,13 @@
   },
   "process": {
     "title": "The Process",
+    "metrics": {
+      "speed": "Software speed",
+      "efficiency": "Workflow efficiency",
+      "cost": "Operational cost",
+      "update": "Update available",
+      "updateBtn": "Update ↑"
+    },
     "steps": [
       {
         "number": "01",
@@ -110,6 +117,7 @@
     "subtitle": "Choose a monthly subscription plan that works for you.",
     "monthly": "Monthly",
     "annually": "Annually",
+    "billedAnnually": "billed annually",
     "popular": "Most Popular",
     "choose": "Choose",
     "choosePlan": "this plan",

@@ -98,7 +98,7 @@ export default function Pricing() {
                     </motion.div>
                   </AnimatePresence>
                   {annual && (
-                    <p className="text-xs text-green-400/80">billed annually</p>
+                    <p className="text-xs text-green-400/80">{t('billedAnnually')}</p>
                   )}
                 </div>
 
@@ -110,7 +110,7 @@ export default function Pricing() {
                       : 'bg-white/6 text-white/80 hover:bg-white/10 border border-white/10'
                   }`}
                 >
-                  {t('choose')} <span className={isPopular ? 'text-blue-400' : 'text-white/40'}>this plan</span>
+                  {t('choose')} <span className={isPopular ? 'text-blue-400' : 'text-white/40'}>{t('choosePlan')}</span>
                 </a>
 
                 <ul className="flex-1 space-y-3">
