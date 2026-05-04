@@ -112,87 +112,146 @@ function ChatbotMockup({ hovered, tx }: { hovered: boolean; tx: ChatbotTx }) {
 }
 
 function ContentMockup({ hovered, tx }: { hovered: boolean; tx: ContentTx }) {
+  const [scanDone, setScanDone] = useState(false);
+
+  useEffect(() => {
+    setScanDone(false);
+    if (!hovered) return;
+    const t = setTimeout(() => setScanDone(true), 1700);
+    return () => clearTimeout(t);
+  }, [hovered]);
+
   return (
-    <div className="w-full h-full flex flex-col items-center justify-center gap-4 p-6">
-      <div className="w-full aspect-video rounded-xl border border-white/8 relative overflow-hidden">
-        {/* Night sky gradient */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#04040f] via-[#0b0e2e] to-[#1a0f40]" />
+    <div className="w-full h-full flex flex-col gap-2 p-4">
+      {/* Image preview area */}
+      <div className="relative flex-1 rounded-xl border border-white/8 overflow-hidden">
 
-        {/* Aurora band */}
-        <motion.div
-          className="absolute inset-x-0 bottom-0 h-2/5 rounded-b-xl"
-          style={{ background: 'linear-gradient(to top, rgba(79,70,229,0.25), rgba(139,92,246,0.12), transparent)' }}
-          animate={{ opacity: hovered ? 0.9 : 0.5 }}
-          transition={{ duration: 2 }}
-        />
-
-        {/* Stars */}
-        {SKY_STARS.map((s, i) => (
-          <motion.div
-            key={i}
-            className="absolute rounded-full bg-white"
-            style={{ left: `${s.x}%`, top: `${s.y}%`, width: s.r * 2, height: s.r * 2 }}
-            animate={{ opacity: [0.2, 0.9, 0.2] }}
-            transition={{ duration: 2 + s.d, repeat: Infinity, delay: s.d, ease: 'easeInOut' }}
-          />
-        ))}
-
-        {/* Moon */}
-        <motion.div
-          className="absolute rounded-full bg-[#fff8d0]"
-          style={{ right: '18%', top: '12%', width: 26, height: 26 }}
-          animate={{
-            boxShadow: hovered
-              ? '0 0 0 3px rgba(255,248,200,0.15), 0 0 28px 12px rgba(255,220,80,0.28)'
-              : '0 0 0 2px rgba(255,248,200,0.07), 0 0 14px 4px rgba(255,220,80,0.14)',
+        {/* Static noise base — dot grid */}
+        <div
+          className="absolute inset-0 bg-[#080812]"
+          style={{
+            backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px)',
+            backgroundSize: '10px 10px',
           }}
-          transition={{ duration: 1.5 }}
         />
 
-        {/* Cloud 1 */}
+        {/* Sky scene revealed by scan line */}
         <motion.div
-          className="absolute top-[40%] rounded-full bg-white/[0.06] blur-sm"
-          style={{ left: '6%', width: 76, height: 20 }}
-          animate={{ x: hovered ? 18 : 0, opacity: hovered ? 0.55 : 0.25 }}
-          transition={{ duration: 3, ease: 'easeInOut' }}
-        />
+          className="absolute inset-0"
+          initial={{ clipPath: 'inset(0 0 100% 0)' }}
+          animate={hovered ? { clipPath: 'inset(0 0 0% 0)' } : { clipPath: 'inset(0 0 100% 0)' }}
+          transition={{ duration: 1.65, ease: 'linear' }}
+        >
+          {/* Sky gradient */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#010714] via-[#04122e] to-[#0f0820]" />
 
-        {/* Cloud 2 */}
-        <motion.div
-          className="absolute top-[58%] rounded-full bg-white/[0.05] blur-sm"
-          style={{ right: '8%', width: 58, height: 15 }}
-          animate={{ x: hovered ? -12 : 0, opacity: hovered ? 0.45 : 0.18 }}
-          transition={{ duration: 3.5, ease: 'easeInOut' }}
-        />
+          {/* Aurora — cyan/teal */}
+          <motion.div
+            className="absolute"
+            style={{
+              inset: '8% 0 38% 0',
+              background: 'radial-gradient(ellipse 95% 65% at 50% 50%, rgba(34,211,238,0.20), rgba(16,185,129,0.10), transparent)',
+              filter: 'blur(10px)',
+            }}
+            animate={hovered ? { scaleX: [1, 1.06, 0.96, 1], opacity: [0.7, 1, 0.7] } : {}}
+            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+          />
 
-        {/* Shooting star */}
-        <AnimatePresence>
-          {hovered && (
+          {/* Aurora — purple */}
+          <motion.div
+            className="absolute"
+            style={{
+              inset: '18% -12% 32% -12%',
+              background: 'radial-gradient(ellipse 65% 55% at 38% 50%, rgba(139,92,246,0.25), transparent)',
+              filter: 'blur(12px)',
+            }}
+            animate={hovered ? { x: [-10, 10, -10], opacity: [0.55, 0.85, 0.55] } : {}}
+            transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+          />
+
+          {/* Aurora — blue */}
+          <motion.div
+            className="absolute"
+            style={{
+              inset: '12% -12% 42% -12%',
+              background: 'radial-gradient(ellipse 52% 48% at 72% 50%, rgba(59,130,246,0.18), transparent)',
+              filter: 'blur(12px)',
+            }}
+            animate={hovered ? { x: [8, -8, 8], opacity: [0.45, 0.75, 0.45] } : {}}
+            transition={{ duration: 3.8, repeat: Infinity, ease: 'easeInOut', delay: 0.7 }}
+          />
+
+          {/* Stars */}
+          {SKY_STARS.map((s, i) => (
             <motion.div
-              key="shoot"
-              className="absolute rounded-full"
+              key={i}
+              className="absolute rounded-full bg-white"
+              style={{ left: `${s.x}%`, top: `${s.y * 0.58}%`, width: s.r * 2, height: s.r * 2 }}
+              animate={{ opacity: [0.2, 1, 0.2] }}
+              transition={{ duration: 2 + s.d, repeat: Infinity, delay: s.d, ease: 'easeInOut' }}
+            />
+          ))}
+
+          {/* Mountain silhouette */}
+          <svg className="absolute bottom-0 left-0 right-0 w-full" viewBox="0 0 400 72" preserveAspectRatio="none">
+            <path
+              d="M0,72 L0,52 L38,24 L68,40 L98,14 L128,34 L162,7 L192,27 L222,11 L252,29 L282,16 L312,32 L342,9 L372,24 L400,36 L400,72 Z"
+              fill="#05030e"
+            />
+            <path
+              d="M0,72 L0,52 L38,24 L68,40 L98,14 L128,34 L162,7 L192,27 L222,11 L252,29 L282,16 L312,32 L342,9 L372,24 L400,36"
+              fill="none" stroke="rgba(99,102,241,0.35)" strokeWidth="0.8"
+            />
+          </svg>
+        </motion.div>
+
+        {/* Glowing scan line */}
+        <AnimatePresence>
+          {hovered && !scanDone && (
+            <motion.div
+              key="scan"
+              className="absolute inset-x-0 h-[2px] pointer-events-none"
               style={{
-                width: 42, height: 1.5, top: '20%', left: '15%',
-                rotate: -25,
-                background: 'linear-gradient(to right, transparent, rgba(255,255,255,0.85))',
+                background: 'linear-gradient(to right, transparent 0%, rgba(34,211,238,0.9) 25%, rgba(34,211,238,0.9) 75%, transparent 100%)',
+                boxShadow: '0 0 14px 4px rgba(34,211,238,0.45)',
               }}
-              initial={{ opacity: 0, x: -8 }}
-              animate={{ opacity: [0, 1, 0], x: 64 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.7, delay: 0.5 }}
+              initial={{ top: 0 }}
+              animate={{ top: '100%' }}
+              transition={{ duration: 1.65, ease: 'linear' }}
             />
           )}
         </AnimatePresence>
 
-        {/* Done badge */}
-        <AnimatePresence>
-          {hovered && (
+        {/* Center badge */}
+        <AnimatePresence mode="wait">
+          {!scanDone && (
             <motion.div
+              key="gen"
+              className="absolute inset-0 flex flex-col items-center justify-center gap-1.5 pointer-events-none"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <div className="bg-black/75 border border-white/15 rounded-full px-3.5 py-1.5 text-[11px] text-white/80 backdrop-blur-sm whitespace-nowrap">
+                {tx.generating}
+              </div>
+              <motion.div
+                className="h-px w-20"
+                style={{ background: 'linear-gradient(to right, transparent, rgba(34,211,238,0.7), transparent)' }}
+                animate={{ opacity: [0.3, 1, 0.3], scaleX: [0.7, 1, 0.7] }}
+                transition={{ duration: 1.1, repeat: Infinity, ease: 'easeInOut' }}
+              />
+            </motion.div>
+          )}
+          {scanDone && (
+            <motion.div
+              key="done"
               initial={{ opacity: 0, scale: 0.85 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ delay: 1.0, duration: 0.35 }}
-              className="absolute bottom-2 right-2 bg-black/60 border border-white/10 rounded px-2 py-0.5 text-[10px] text-white/60"
+              transition={{ duration: 0.4 }}
+              className="absolute bottom-2.5 right-2.5 bg-black/65 border border-white/12 rounded px-2 py-0.5 text-[10px] text-green-400/90"
             >
               {tx.done}
             </motion.div>
@@ -200,11 +259,15 @@ function ContentMockup({ hovered, tx }: { hovered: boolean; tx: ContentTx }) {
         </AnimatePresence>
       </div>
 
-      <div className="w-full flex items-center gap-2">
+      {/* Input bar */}
+      <div className="flex items-center gap-2 shrink-0">
         <div className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-xs text-white/30">{tx.placeholder}</div>
         <motion.div
-          className="px-3 py-2 bg-white/8 border border-white/12 rounded-lg text-xs text-white/60 font-medium"
-          animate={hovered ? { backgroundColor: 'rgba(59,130,246,0.2)', borderColor: 'rgba(59,130,246,0.3)' } : {}}
+          className="px-3 py-2 rounded-lg text-xs font-medium shrink-0 border"
+          animate={hovered
+            ? { backgroundColor: 'rgba(59,130,246,0.22)', borderColor: 'rgba(59,130,246,0.38)', color: 'rgba(255,255,255,0.85)' }
+            : { backgroundColor: 'rgba(255,255,255,0.05)', borderColor: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.5)' }
+          }
           transition={{ duration: 0.3 }}
         >
           {tx.button}
