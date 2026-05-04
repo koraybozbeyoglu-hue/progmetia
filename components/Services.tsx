@@ -111,7 +111,7 @@ function ChatbotMockup({ hovered, tx }: { hovered: boolean; tx: ChatbotTx }) {
   );
 }
 
-type StarParticle = { x: number; y: number; r: number; op: number; spd: number; dir: 1 | -1; dx: number; dy: number };
+type StarParticle = { x: number; y: number; r: number; op: number; spd: number; dir: 1 | -1; dx: number; dy: number; color: string };
 type Meteor = { x: number; y: number; vx: number; vy: number; tail: number; life: number };
 
 function ContentMockup({ hovered, tx }: { hovered: boolean; tx: ContentTx }) {
@@ -135,15 +135,17 @@ function ContentMockup({ hovered, tx }: { hovered: boolean; tx: ContentTx }) {
     const stars: StarParticle[] = Array.from({ length: 35 }, () => {
       const angle = Math.random() * Math.PI * 2;
       const spd = 0.08 + Math.random() * 0.12;
+      const palette = ['220,235,255', '180,210,255', '140,185,255', '100,160,255', '200,220,255'];
       return {
         x: Math.random() * W,
         y: Math.random() * H,
-        r: Math.random() * 1.3 + 0.25,
+        r: Math.random() * 0.85 + 0.15,
         op: Math.random(),
         spd: Math.random() * 0.006 + 0.002,
         dir: (Math.random() > 0.5 ? 1 : -1) as 1 | -1,
         dx: Math.cos(angle) * spd,
         dy: Math.sin(angle) * spd,
+        color: palette[Math.floor(Math.random() * palette.length)],
       };
     });
 
@@ -175,7 +177,7 @@ function ContentMockup({ hovered, tx }: { hovered: boolean; tx: ContentTx }) {
         else if (s.op <= 0) { s.op = 0; s.dir = 1; }
         ctx.beginPath();
         ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(220,230,255,${s.op})`;
+        ctx.fillStyle = `rgba(${s.color},${s.op})`;
         ctx.fill();
       }
 
