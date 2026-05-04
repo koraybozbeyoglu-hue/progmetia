@@ -193,7 +193,16 @@
     "phone": "Phone",
     "followUs": "Follow Us",
     "emailValue": "info@progmetia.com",
-    "phoneValue": "+90 506 294 34 31"
+    "phoneValue": "+90 506 294 34 31",
+    "nameLabel": "Name",
+    "namePlaceholder": "John Doe",
+    "emailLabel": "Email",
+    "emailPlaceholder": "john@example.com",
+    "phoneLabel": "Phone",
+    "phonePlaceholder": "+1 xxx xxx xxxx",
+    "messageLabel": "Message",
+    "messagePlaceholder": "Hi Progmetia team, I'd like to get in touch...",
+    "submit": "Submit"
   },
   "footer": {
     "description": "Taking your business into the future with artificial intelligence.",

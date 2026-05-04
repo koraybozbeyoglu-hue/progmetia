@@ -193,7 +193,16 @@
     "phone": "Telefon",
     "followUs": "Bizi Takip Edin",
     "emailValue": "info@progmetia.com",
-    "phoneValue": "+90 506 294 34 31"
+    "phoneValue": "+90 506 294 34 31",
+    "nameLabel": "İsim",
+    "namePlaceholder": "Adınız Soyadınız",
+    "emailLabel": "E-posta",
+    "emailPlaceholder": "ornek@email.com",
+    "phoneLabel": "Telefon",
+    "phonePlaceholder": "+90 5xx xxx xx xx",
+    "messageLabel": "Mesaj",
+    "messagePlaceholder": "Merhaba Progmetia ekibi, sizinle iletişime geçmek istiyorum...",
+    "submit": "Gönder"
   },
   "footer": {
     "description": "Yapay zeka ile işletmenizi geleceğe taşıyoruz.",
