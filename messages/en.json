@@ -106,10 +106,10 @@
   },
   "stats": {
     "items": [
-      { "value": "93+", "label": "Completed Projects" },
+      { "value": "4", "label": "Completed Projects" },
       { "value": "100%", "label": "Customer Satisfaction" },
       { "value": "3 Hours", "label": "Saved Daily" },
-      { "value": "$80K", "label": "Monthly Cost Savings" }
+      { "value": "$4,500", "label": "Monthly Cost Savings" }
     ]
   },
   "pricing": {

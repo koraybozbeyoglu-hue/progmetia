@@ -106,10 +106,10 @@
   },
   "stats": {
     "items": [
-      { "value": "93+", "label": "Tamamlanan Proje" },
+      { "value": "4", "label": "Tamamlanan Proje" },
       { "value": "100%", "label": "Müşteri Memnuniyeti" },
       { "value": "3 Saat", "label": "Günlük Tasarruf" },
-      { "value": "$80K", "label": "Aylık Maliyet Tasarrufu" }
+      { "value": "$4.500", "label": "Aylık Maliyet Tasarrufu" }
     ]
   },
   "pricing": {
