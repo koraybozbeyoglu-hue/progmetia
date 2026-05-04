@@ -62,10 +62,10 @@
     },
     "llm": {
       "title": "AI Sorgu Arayüzü",
-      "q1": "Quokka'lar nerede yaşar?",
-      "a1": "Quokka'lar Rottnest Adası'nda yaşar.",
-      "q2": "Ne ile beslenirler?",
-      "a2": "Bitkiler, yapraklar ve otla beslenirler.",
+      "q1": "Yapay zeka işimi nasıl geliştirir?",
+      "a1": "Tekrarlayan görevleri otomatize eder, verimliliği artırır.",
+      "q2": "Entegrasyon ne kadar sürer?",
+      "a2": "Kapsama göre birkaç günden birkaç haftaya kadar sürer.",
       "placeholder": "Sorunuzu yazın..."
     },
     "consulting": {
