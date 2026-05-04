@@ -9,7 +9,7 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 const ANNUAL_DISCOUNT = 0.8;
 
 function getAnnualPrice(monthlyStr: string): string {
-  const num = parseFloat(monthlyStr.replace(/[^0-9.]/g, '').replace(',', ''));
+  const num = parseInt(monthlyStr.replace(/[^0-9]/g, ''), 10);
   if (isNaN(num)) return monthlyStr;
   const annual = Math.round(num * ANNUAL_DISCOUNT);
   return monthlyStr.startsWith('€') ? `€${annual.toLocaleString('de-DE')}` : `$${annual.toLocaleString()}`;
