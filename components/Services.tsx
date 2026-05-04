@@ -397,27 +397,27 @@ function ConsultingMockup({ hovered, tx }: { hovered: boolean; tx: ConsultingTx 
   const pts = points.map((p, i) => `${(i / (points.length - 1)) * w},${h - (p / max) * h}`).join(' ');
 
   return (
-    <div className="w-full h-full flex flex-col justify-center p-3 gap-2">
-      <div className="flex gap-3">
+    <div className="w-full h-full flex flex-col p-2.5 gap-2">
+      <div className="flex gap-2 shrink-0">
         <motion.div
-          className="flex-1 bg-white/5 border border-white/8 rounded-xl p-3"
+          className="flex-1 bg-white/5 border border-white/8 rounded-lg p-2"
           animate={hovered ? { borderColor: 'rgba(74,222,128,0.3)', backgroundColor: 'rgba(74,222,128,0.05)' } : { borderColor: 'rgba(255,255,255,0.08)', backgroundColor: 'rgba(255,255,255,0.05)' }}
           transition={{ duration: 0.4 }}
         >
-          <div className="text-xs text-white/40 mb-1">{tx.efficiency}</div>
-          <div className="text-lg font-bold text-green-400">+103%</div>
+          <div className="text-[10px] text-white/40 mb-0.5">{tx.efficiency}</div>
+          <div className="text-base font-bold text-green-400">+103%</div>
         </motion.div>
         <motion.div
-          className="flex-1 bg-white/5 border border-white/8 rounded-xl p-3"
+          className="flex-1 bg-white/5 border border-white/8 rounded-lg p-2"
           animate={hovered ? { borderColor: 'rgba(96,165,250,0.3)', backgroundColor: 'rgba(96,165,250,0.05)' } : { borderColor: 'rgba(255,255,255,0.08)', backgroundColor: 'rgba(255,255,255,0.05)' }}
           transition={{ duration: 0.4 }}
         >
-          <div className="text-xs text-white/40 mb-1">{tx.cost}</div>
-          <div className="text-lg font-bold text-blue-400">-67%</div>
+          <div className="text-[10px] text-white/40 mb-0.5">{tx.cost}</div>
+          <div className="text-base font-bold text-blue-400">-67%</div>
         </motion.div>
       </div>
-      <div className="bg-white/5 border border-white/8 rounded-xl p-3">
-        <svg width="100%" viewBox={`0 0 ${w} ${h}`} className="overflow-visible">
+      <div className="flex-1 bg-white/5 border border-white/8 rounded-lg p-2 overflow-hidden">
+        <svg width="100%" height="100%" viewBox={`0 0 ${w} ${h}`} preserveAspectRatio="none" className="overflow-visible">
           <defs>
             <linearGradient id="lineGrad" x1="0" y1="0" x2="1" y2="0">
               <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.6" />
