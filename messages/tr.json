@@ -46,9 +46,9 @@
   },
   "mockups": {
     "chatbot": {
-      "userMsg": "Yarın saat 15:00'te John ile toplantı planla.",
-      "aiReply": "Tamam! Toplantı yarın 15:00'e ayarlandı. John'a bildirim gönderildi. ✓",
-      "aiStatic": "Tamam! Toplantıyı 15:00'e ayarladım. Takvim daveti gönderildi.",
+      "userMsg": "Yarın saat 15:00'te Ahmet Bey ile toplantı planla.",
+      "aiReply": "Tamam! Toplantı yarın 15:00'e ayarlandı. Ahmet Bey'e bildirim gönderildi. ✓",
+      "aiStatic": "Tamam! Toplantıyı 15:00'e ayarladım. Ahmet Bey'e takvim daveti gönderildi.",
       "placeholder": "AI Asistana mesaj yaz..."
     },
     "content": {
